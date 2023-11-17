@@ -23,6 +23,7 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet]
+    // USE THIS WITH POST AND PUT
   //  [ServiceFilter(typeof(ValidationFilterAttribute))]
     public IActionResult GetAll()
     {
@@ -30,7 +31,7 @@ public class WeatherForecastController : ControllerBase
     }
     
     [HttpGet]
-   // [ServiceFilter(typeof(ValidationFilterAttribute))]
+   // use THIS WITH delete and put 
    [ServiceFilter(typeof(ValidateEntityExistAttribute<WeatherForecast>))]
     public IActionResult FindById(Guid id)
     {
