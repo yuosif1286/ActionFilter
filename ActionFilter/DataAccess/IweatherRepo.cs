@@ -1,6 +1,8 @@
 ﻿namespace ActionFilter.DataAccess;
 
-public interface IweatherRepo
+public interface IWeatherRepo
 {
-    
+    Task<List<WeatherForecast?>> GetWeather();
+    Task<WeatherForecast?> FindById(Guid id);
+
 }
