@@ -34,7 +34,7 @@ public class WeatherForecastController : ControllerBase
    [ServiceFilter(typeof(ValidateEntityExistAttribute<WeatherForecast>))]
     public IActionResult FindById(Guid id)
     {
-        return Ok(_weatherRepo.FindById(id));
+        return Ok(HttpContext.Items["entity"]);
     }
    
     [HttpGet(Name = "GetWeatherForecast")]
