@@ -1,5 +1,6 @@
 using ActionFilter.ActionFilters;
 using ActionFilter.DataAccess;
+using ActionFilter.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActionFilter.Controllers;
@@ -25,9 +26,9 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     // USE THIS WITH POST AND PUT
   //  [ServiceFilter(typeof(ValidationFilterAttribute))]
-    public IActionResult GetAll()
+    public IActionResult GetAll([FromQuery] WeatherDto weatherDto)
     {
-        return Ok(_weatherRepo.GetWeather());
+        return Ok(_weatherRepo.GetWeather(weatherDto.PageNumber,weatherDto.PageSize,""));
     }
     
     [HttpGet]

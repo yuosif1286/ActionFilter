@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ActionFilter.Paging;
+using Microsoft.EntityFrameworkCore;
 
 namespace ActionFilter.DataAccess;
 
@@ -13,7 +14,7 @@ public class WeatherRepo : IWeatherRepo
     {
         using (var context = new AppDbContext())
         {
-            context.WeatherForecasts.AddRange(Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            context.WeatherForecasts.AddRange(Enumerable.Range(1, 20).Select(index => new WeatherForecast
                 {
                     Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
                     TemperatureC = Random.Shared.Next(-20, 55),
@@ -21,15 +22,16 @@ public class WeatherRepo : IWeatherRepo
                 })
                 .ToList());
             context.SaveChanges();
-          
         }
     }
 
-    public async Task<List<WeatherForecast?>> GetWeather()
+
+    public async Task<PagedList<WeatherForecast?>> GetWeather(int pageNumber, int pageSize, string? orderBy)
     {
         using (var context = new AppDbContext())
         {
-            return await context.WeatherForecasts.ToListAsync();
+            var source = context.WeatherForecasts.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            return PagedList<WeatherForecast?>.ToPagedList(source, pageNumber, pageSize);
         }
     }
 
