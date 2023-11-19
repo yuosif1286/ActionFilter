@@ -46,5 +46,8 @@ public class ValidateEntityExistAttribute<T> : IActionFilter where
 
     public void OnActionExecuted(ActionExecutedContext context)
     {
+        var entity = (T)context.HttpContext.Items["entity"];
+        
+        Console.Write(entity.Id);
     }
 }
